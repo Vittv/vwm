@@ -1,0 +1,24 @@
+#!/bin/sh
+# list .desktop applications via dmenu
+
+cache="${XDG_CACHE_HOME:-$HOME/.cache}/dmenu-apps"
+
+# regenerate cache if older than 1 day
+if [ ! -f "$cache" ] || [ "$(( $(date +%s) - $(stat -c %Y "$cache") ))" -gt 86400 ]; then
+  for dir in /usr/share/applications "$HOME/.local/share/applications"; do
+    [ -d "$dir" ] || continue
+    for f in "$dir"/*.desktop; do
+      [ -f "$f" ] || continue
+      awk -F= '
+      /^Name=/ && !name { name=substr($0, 6) }
+      /^Exec=/ && !exec { exec=substr($0, 6) }
+      /^NoDisplay=/ && $2=="true" { hidden=1 }
+      END { if (!hidden && name && exec) print name "|" exec }
+      ' "$f"
+    done
+  done | sort -u > "$cache"
+fi
+
+choice=$(cut -d'|' -f1 "$cache" | dmenu -i "$@") || exit
+
+grep "^${choice}|" "$cache" | head -1 | cut -d'|' -f2 | xargs sh -c 'exec "$@"' _ &

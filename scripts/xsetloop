@@ -1,0 +1,8 @@
+#!/bin/sh
+
+while true; do
+  ram=$(free -h --si | awk '/^Mem:/ {print $3 "/" $2}')
+  disk=$(df -h / | awk 'NR==2 {print $4}')
+  xsetroot -name " $ram | $disk | $(date '+%d - %I:%M %p') "
+  sleep 30
+done
