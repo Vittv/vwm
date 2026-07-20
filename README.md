@@ -1,0 +1,2 @@
+# vwm
+My dwm config.
