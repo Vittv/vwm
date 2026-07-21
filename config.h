@@ -69,6 +69,7 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "/home/vitt/build/dwm/scripts/dmenu-apps", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { "st", NULL };
 static const char *kittycmd[] = { "kitty", NULL };
+static const char *filemancmd[] = { "kitty", "-e", "yazi", NULL };
 static const char *browsercmd[] = { "zen-browser", NULL };
 static const char *wallswitchcmd[] = { "/home/vitt/.local/bin/wallswitch.sh", NULL };
 static const char *powermenucmd[] = { "/home/vitt/.local/bin/powermenu.sh", NULL };
@@ -79,6 +80,7 @@ static const Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ ALTKEY,                       XK_space,  spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = kittycmd } },
+  { MODKEY,                       XK_e,      spawn,          {.v = filemancmd } },
   { MODKEY,                       XK_a,      spawn,          {.v = browsercmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
