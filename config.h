@@ -7,16 +7,16 @@ static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows sel
 static const unsigned int systrayonleft = 1;    /* 0: systray in the right corner, >0: systray on left of status text */
 static const unsigned int systrayspacing = 2;   /* systray spacing */
 static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
-static const int showsystray        = 1;        /* 0 means no systray */
+static const int showsystray        = 0;        /* 0 means no systray */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "FiraCode Nerd Font Propo:style=SemiBold:size=10" };
-static const char dmenufont[]       = "FiraCode Nerd Font Propo:style=SemiBold:size=10";
+static const char *fonts[]          = { "SF Pro Display:style=Medium:size=10" };
+static const char dmenufont[]       = "SF Pro Display:style=Medium:size=10";
 static const char col_gray1[]       = "#141415"; /*dark part */
-static const char col_gray2[]       = "#171719"; /*inactive border color */
-static const char col_gray3[]       = "#878787"; /*light gray */
-static const char col_gray4[]       = "#cdcdcd"; /*text */
-static const char col_cyan[]        = "#252530"; /*active border color and primary color */
+static const char col_gray2[]       = "#333738"; /*inactive border color */
+static const char col_gray3[]       = "#878787"; /*inactive text */
+static const char col_gray4[]       = "#cdcdcd"; /*active text */
+static const char col_cyan[]        = "#606079"; /*active border color and primary color */
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
@@ -67,6 +67,8 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 // static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *dmenucmd[] = { "/home/vitt/build/dwm/scripts/dmenu-apps", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
+static const char *roficmd[] = { "sh", "-c", "rofi -show drun", NULL };
+static const char *refreshbarcmd[] = { "sh", "-c", "sleep 0.3 && /home/vitt/.config/polybar/src/launch.sh", NULL };
 static const char *termcmd[]  = { "st", NULL };
 static const char *kittycmd[] = { "kitty", NULL };
 static const char *filemancmd[] = { "kitty", "-e", "yazi", NULL };
@@ -75,10 +77,12 @@ static const char *wallswitchcmd[] = { "/home/vitt/.local/bin/wallswitch.sh", NU
 static const char *powermenucmd[] = { "/home/vitt/.local/bin/powermenu.sh", NULL };
 static const char *ssselectcmd[] = { "sh", "-c", "scrot -s --freeze ~/Pictures/Screenshots/%Y-%m-%d_%H%M%S.png -e 'xclip -selection clipboard -t image/png < $f'", NULL };
 static const char *ssfullcmd[]   = { "sh", "-c", "scrot ~/Pictures/Screenshots/%Y-%m-%d_%H%M%S.png -e 'xclip -selection clipboard -t image/png < $f'", NULL };
+static const char *colorpickercmd[] = { "sh", "-c", "COLOR=$(xcolor) && echo \"$COLOR\" | xclip -selection clipboard && notify-send 'Color Picker' \"<b>$COLOR</b> copied to clipboard\"", NULL };
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
-	{ ALTKEY,                       XK_space,  spawn,          {.v = dmenucmd } },
+	{ ALTKEY,                       XK_space,  spawn,          {.v = roficmd } },
+  { MODKEY,                       XK_r,      spawn,          {.v = refreshbarcmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = kittycmd } },
   { MODKEY,                       XK_e,      spawn,          {.v = filemancmd } },
   { MODKEY,                       XK_a,      spawn,          {.v = browsercmd } },
@@ -101,8 +105,8 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
 	{ MODKEY,                       XK_h,  focusmon,           {.i = -1 } },
 	{ MODKEY,                       XK_l, focusmon,            {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_h,  tagmon,             {.i = -1 } },
+	{ MODKEY|ShiftMask,             XK_l, tagmon,              {.i = +1 } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
@@ -117,6 +121,7 @@ static const Key keys[] = {
   { MODKEY|ShiftMask,             XK_p,      spawn,          {.v = powermenucmd } },
   { 0,                            XK_Print,  spawn,          {.v = ssselectcmd } },
   { ShiftMask,                    XK_Print,  spawn,          {.v = ssfullcmd } },
+  { MODKEY|ShiftMask,             XK_c,      spawn,          {.v = colorpickercmd } },
 };
 
 /* button definitions */
