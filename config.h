@@ -10,8 +10,8 @@ static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display 
 static const int showsystray        = 0;        /* 0 means no systray */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "SF Pro Display:style=Medium:size=10" };
-static const char dmenufont[]       = "SF Pro Display:style=Medium:size=10";
+static const char *fonts[]          = { "FiraCode Nerd Font Propo:style=Medium:size=10" };
+static const char dmenufont[]       = "FiraCode Nerd Font Propo:style=Medium:size=10";
 static const char col_gray1[]       = "#141415"; /*dark part */
 static const char col_gray2[]       = "#333738"; /*inactive border color */
 static const char col_gray3[]       = "#878787"; /*inactive text */
@@ -68,6 +68,7 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 // static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *dmenucmd[] = { "/home/vitt/build/dwm/scripts/dmenu-apps", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *roficmd[] = { "sh", "-c", "rofi -show drun", NULL };
+static const char *devcmd[] = { "/home/vitt/.local/bin/dev.sh", NULL };
 static const char *refreshbarcmd[] = { "sh", "-c", "sleep 0.3 && /home/vitt/.config/polybar/src/launch.sh", NULL };
 static const char *termcmd[]  = { "st", NULL };
 static const char *kittycmd[] = { "kitty", NULL };
@@ -82,6 +83,7 @@ static const char *colorpickercmd[] = { "sh", "-c", "COLOR=$(xcolor) && echo \"$
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ ALTKEY,                       XK_space,  spawn,          {.v = roficmd } },
+	{ MODKEY,                       XK_space,  spawn,          {.v = devcmd } },
   { MODKEY,                       XK_r,      spawn,          {.v = refreshbarcmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = kittycmd } },
   { MODKEY,                       XK_e,      spawn,          {.v = filemancmd } },
@@ -99,7 +101,6 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
-	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY,                       XK_v,       togglefloating, {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
