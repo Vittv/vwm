@@ -18,8 +18,8 @@ My dwm build and configuration.
 - Explicit `togglefloating` (Mod+v) shrinks the window to 75% and centers it on the mouse cursor
 - Size/position changes only happen on explicit float toggle, not on drag
 
+### Fullscreen toggle (`togglefullscreen`)
+- Explicit `togglefullscreen` (Mod+Shift+F) fullscreens the focused window, placing it on top of everything, and taking the entire current monitor's height and width
+
 ### Focus monitor (`focusmon`)
 - Warps cursor to the center of the target monitor on focus switch (Mod+h/l)
-
-### Configure event handling
-- Floating windows that resize off-screen are re-centered within the monitor

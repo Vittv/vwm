@@ -240,6 +240,7 @@ static void tagmon(const Arg *arg);
 static void tile(Monitor *m);
 static void togglebar(const Arg *arg);
 static void togglefloating(const Arg *arg);
+static void togglefullscreen(const Arg *arg);
 static void toggletag(const Arg *arg);
 static void toggleview(const Arg *arg);
 static void unfocus(Client *c, int setfocus);
@@ -1968,6 +1969,14 @@ tile(Monitor *m)
 				ty += HEIGHT(c);
 		}
 }
+static void
+togglefullscreen(const Arg *arg)
+{
+	if (!selmon->sel)
+		return;
+	setfullscreen(selmon->sel, !selmon->sel->isfullscreen);
+}
+
 
 void
 togglebar(const Arg *arg)
