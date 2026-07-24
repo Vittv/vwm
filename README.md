@@ -3,6 +3,7 @@ My dwm build and configuration.
 
 ## Patches
 - **dwm-systray-6.8** - system tray support
+- **dwm-anybar** - lets dwm manage polybar as its own bar (proper space reservation, togglebar support, fullscreen coverage)
 - **EWMH support** - `_NET_ACTIVE_WINDOW`, `_NET_CLIENT_LIST`,
   `_NET_CURRENT_DESKTOP`, `_NET_DESKTOP_NAMES`, `_NET_NUMBER_OF_DESKTOPS`,
   `_NET_DESKTOP_VIEWPORT`, `_NET_WM_DESKTOP`, `_NET_WM_WINDOW_TYPE`,
